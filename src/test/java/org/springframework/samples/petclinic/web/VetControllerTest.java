@@ -86,6 +86,50 @@ class VetControllerTest {
     }
 
     @Test
-    void showResourcesVetList() {
+    void showResourcesVetListNoVet() {
+        // given
+        given(clinicService.findVets()).willReturn(new ArrayList<>());
+
+        // when
+        Vets noVets = vetController.showResourcesVetList();
+
+        // then
+        assertEquals(0, noVets.getVetList().size());
+    }
+
+    @Test
+    void showResourcesVetListOneVet() {
+        // given
+        Vet vet = new Vet();
+        vet.setId(1);
+        vet.setFirstName("John");
+        vet.setLastName("Doe");
+        given(clinicService.findVets()).willReturn(List.of(vet));
+
+        // when
+        Vets vets = vetController.showResourcesVetList();
+
+        // then
+        assertEquals(1, vets.getVetList().size());
+    }
+
+    @Test
+    void showResourcesVetListMultipleVets() {
+        // given
+        Vet vetA = new Vet();
+        vetA.setId(1);
+        vetA.setFirstName("John");
+        vetA.setLastName("Doe");
+        Vet vetB = new Vet();
+        vetB.setId(2);
+        vetB.setFirstName("James");
+        vetB.setLastName("Dean");
+        given(clinicService.findVets()).willReturn(List.of(vetA, vetB));
+
+        // when
+        Vets vets = vetController.showResourcesVetList();
+
+        // then
+        assertEquals(2, vets.getVetList().size());
     }
 }
