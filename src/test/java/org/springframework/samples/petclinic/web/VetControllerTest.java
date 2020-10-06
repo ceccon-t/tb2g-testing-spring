@@ -19,6 +19,8 @@ import static org.mockito.Mockito.atLeastOnce;
 @ExtendWith(MockitoExtension.class)
 class VetControllerTest {
 
+    public static final String VET_LIST_ROUTE = "vets/vetList";
+
     @Mock
     ClinicService clinicService;
 
@@ -36,7 +38,7 @@ class VetControllerTest {
 
         // then
         then(clinicService).should(atLeastOnce()).findVets();
-        assertEquals("vets/vetList", route);
+        assertEquals(VET_LIST_ROUTE, route);
         assertTrue(model.containsKey("vets"));
         assertEquals(0, ((Vets) model.get("vets")).getVetList().size());
     }
@@ -56,7 +58,7 @@ class VetControllerTest {
 
         // then
         then(clinicService).should(atLeastOnce()).findVets();
-        assertEquals("vets/vetList", route);
+        assertEquals(VET_LIST_ROUTE, route);
         assertTrue(model.containsKey("vets"));
         assertEquals(1, ((Vets) model.get("vets")).getVetList().size());
     }
@@ -80,7 +82,7 @@ class VetControllerTest {
 
         // then
         then(clinicService).should(atLeastOnce()).findVets();
-        assertEquals("vets/vetList", route);
+        assertEquals(VET_LIST_ROUTE, route);
         assertTrue(model.containsKey("vets"));
         assertEquals(2, ((Vets) model.get("vets")).getVetList().size());
     }
