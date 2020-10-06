@@ -58,10 +58,10 @@ class ClinicServiceImplTest {
         given(petRepository.findPetTypes()).willReturn(List.of(type));
 
         // when
-        Collection<PetType> noTypes = service.findPetTypes();
+        Collection<PetType> types = service.findPetTypes();
 
         // then
-        assertEquals(1, noTypes.size());
+        assertEquals(1, types.size());
     }
 
     @Test
@@ -76,9 +76,9 @@ class ClinicServiceImplTest {
         given(petRepository.findPetTypes()).willReturn(List.of(typeA, typeB));
 
         // when
-        Collection<PetType> noTypes = service.findPetTypes();
+        Collection<PetType> types = service.findPetTypes();
 
         // then
-        assertEquals(2, noTypes.size());
+        assertEquals(2, types.size());
     }
 }
