@@ -34,6 +34,17 @@ class OwnerControllerTest {
     }
 
     @Test
+    void testNewOwnerPostValid() throws Exception {
+        mockMvc.perform(post("/owners/new")
+                .param("firstName", "Jimmy")
+                .param("lastName", "Buffett")
+                .param("address", "123 Duval St")
+                .param("city", "Key West")
+                .param("telephone", "3151231234"))
+            .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
     void testFindByNameNotFound() throws Exception {
         mockMvc.perform(get("/owners")
                     .param("lastName", "Dont find ME!")
