@@ -9,14 +9,12 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringJUnitWebConfig(locations = {"classpath:spring/mvc-test-config.xml", "classpath:spring/mvc-core-config.xml"})
@@ -65,6 +63,30 @@ class OwnerControllerTest {
                 .andExpect(view().name("redirect:/owners/" + ownerId))
         ;
 
+    }
+
+    @Test
+    void testFindByNameFindsSeveral() throws Exception {
+
+        Owner johnDoe = new Owner();
+        johnDoe.setId(1);
+        johnDoe.setFirstName("John");
+        johnDoe.setLastName("Doe");
+
+        Owner jimDae = new Owner();
+        jimDae.setId(2);
+        jimDae.setFirstName("Jim");
+        jimDae.setLastName("Dae");
+
+        List<Owner> foundOwners = List.of(johnDoe, jimDae);
+
+        given(clinicService.findOwnerByLastName("")).willReturn(foundOwners);
+
+        mockMvc.perform(get("/owners"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("selections"))
+            .andExpect(view().name("owners/ownersList"))
+        ;
     }
 
     @Test
